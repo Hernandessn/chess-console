@@ -17,7 +17,7 @@
             return _pieces[line, column];
         }
 
-        public Piece piece(Position pos)
+        public Piece Piece(Position pos)
         {
             return _pieces[pos.Line, pos.Column];
         }
@@ -25,7 +25,7 @@
         public bool ExistPiece(Position pos)
         {
             ValidatePosition(pos);
-            return piece(pos) != null;
+            return Piece(pos) != null;
         }
 
         public void ToPutPiece(Piece p, Position pos)
@@ -36,6 +36,18 @@
             }
             _pieces[pos.Line, pos.Column] = p;
             p.Position = pos;
+        }
+
+        public Piece RemovePiece(Position pos)
+        {
+            if (Piece(pos) == null)
+            {
+                return null;
+            }
+            Piece aux = Piece(pos);
+            aux.Position = null;
+            _pieces[pos.Line, pos.Column] = null;
+            return aux;
         }
 
         public bool PositionValidation(Position pos)
