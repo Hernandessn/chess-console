@@ -10,15 +10,10 @@ namespace chess_console
         {
             try
             {
-                Board board = new Board(8, 8);
+                PositonChess pos = new PositonChess('c', 7);
+                Console.WriteLine(pos);
 
-                board.ToPutPiece(new Tower(board, Color.Black), new Position(0, 0));
-                board.ToPutPiece(new Tower(board, Color.Black), new Position(1, 9));
-                board.ToPutPiece(new King(board, Color.Black), new Position(0, 2));
-
-                Screen.PrintBoard(board);
-
-                Console.ReadLine();
+                Console.WriteLine(pos.ToPosition());
             }
             catch (BoardException e)
             {
