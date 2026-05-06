@@ -1,10 +1,15 @@
-﻿namespace xadrezConsole
+﻿using board;
+
+namespace xadrezConsole
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Position P;
+            P = new Position(3, 4);
+
+            Console.WriteLine($"Posição: {P}");
         }
     }
 }
