@@ -20,6 +20,13 @@ namespace chess_console
                     Console.WriteLine();
                     Console.Write("Origin: ");
                     Position origin = Screen.ReadPositionChess().ToPosition();
+
+                    bool[,] possiblePositions = game.Board.Piece(origin).PossibleMoviments();
+
+                    Console.Clear();
+                    Screen.PrintBoard(game.Board, possiblePositions);
+
+                    Console.WriteLine();
                     Console.Write("Destination: ");
                     Position destination = Screen.ReadPositionChess().ToPosition();
 
