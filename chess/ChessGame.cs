@@ -11,7 +11,6 @@ namespace chess
         private HashSet<Piece> _pieces;
         private HashSet<Piece> _captured;
 
-
         public ChessGame()
         {
             Board = new Board(8, 8);
@@ -75,6 +74,33 @@ namespace chess
             {
                 CurrentPlayer = Color.White;
             }
+        }
+
+        public HashSet<Piece> PiecesCaptured(Color color)
+        {
+            HashSet<Piece> aux = new HashSet<Piece>();
+            foreach (Piece x in _captured)
+            {
+                if (x.Color == color)
+                {
+                    aux.Add(x);
+                }
+            }
+            return aux;
+        }
+
+        public HashSet<Piece> PiecesInPlay(Color color)
+        {
+            HashSet<Piece> aux = new HashSet<Piece>();
+            foreach (Piece x in _pieces)
+            {
+                if (x.Color == color)
+                {
+                    aux.Add(x);
+                }
+            }
+            aux.ExceptWith(PiecesCaptured(color));
+            return aux;
         }
 
         public void PutNewPiece(char column, int line, Piece piece)

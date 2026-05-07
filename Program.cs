@@ -17,10 +17,7 @@ namespace chess_console
                     try
                     {
                         Console.Clear();
-                        Screen.PrintBoard(game.Board);
-                        Console.WriteLine();
-                        Console.WriteLine($"Shift: {game.Shift}");
-                        Console.WriteLine($"Aguardando jogada: {game.CurrentPlayer}");
+                        Screen.PrintMatch(game);
 
                         Console.WriteLine();
                         Console.Write("Origin: ");
