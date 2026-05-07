@@ -14,25 +14,38 @@ namespace chess_console
 
                 while (!game.Finished)
                 {
-                    Console.Clear();
-                    Screen.PrintBoard(game.Board);
+                    try
+                    {
+                        Console.Clear();
+                        Screen.PrintBoard(game.Board);
+                        Console.WriteLine();
+                        Console.WriteLine($"Shift: {game.Shift}");
+                        Console.WriteLine($"Aguardando jogada: {game.CurrentPlayer}");
 
-                    Console.WriteLine();
-                    Console.Write("Origin: ");
-                    Position origin = Screen.ReadPositionChess().ToPosition();
+                        Console.WriteLine();
+                        Console.Write("Origin: ");
+                        Position origin = Screen.ReadPositionChess().ToPosition();
+                        game.validationPositionOrigin(origin);
 
-                    bool[,] possiblePositions = game.Board.Piece(origin).PossibleMoviments();
+                        bool[,] possiblePositions = game.Board.Piece(origin).PossibleMoviments();
 
-                    Console.Clear();
-                    Screen.PrintBoard(game.Board, possiblePositions);
+                        Console.Clear();
+                        Screen.PrintBoard(game.Board, possiblePositions);
 
-                    Console.WriteLine();
-                    Console.Write("Destination: ");
-                    Position destination = Screen.ReadPositionChess().ToPosition();
+                        Console.WriteLine();
+                        Console.Write("Destination: ");
+                        Position destination = Screen.ReadPositionChess().ToPosition();
+                        game.ValidationPositionDestination(origin, destination);
 
-                    game.PerformsMoviment(origin, destination);
+                        game.TheMadePlay(origin, destination);
+                    }
+                    catch (BoardException e)
+                    {
+                        Console.WriteLine($"Error: {e.Message}");
+                        Console.ReadLine();
+                    }
+                    }
                 }
-            }
             catch (BoardException e)
             {
                 Console.WriteLine($"Error: {e.Message}");

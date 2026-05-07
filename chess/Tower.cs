@@ -21,52 +21,45 @@ namespace chess
 
             Position pos = new Position(0, 0);
 
-            // above
-            pos.SetValues(pos.Line - 1, pos.Column);
+
+            // above 
+            pos.SetValues(Position.Line - 1, Position.Column);
             while (Board.PositionValidation(pos) && CanMove(pos))
             {
                 mat[pos.Line, pos.Column] = true;
                 if (Board.Piece(pos) != null && Board.Piece(pos).Color != Color)
-                {
                     break;
-                }
-                pos.Line = pos.Line - 1;
+                pos.Line--;
             }
 
             // below
-            pos.SetValues(pos.Line + 1, pos.Column);
+            pos.SetValues(Position.Line + 1, Position.Column);
             while (Board.PositionValidation(pos) && CanMove(pos))
             {
                 mat[pos.Line, pos.Column] = true;
                 if (Board.Piece(pos) != null && Board.Piece(pos).Color != Color)
-                {
                     break;
-                }
-                pos.Line = pos.Line + 1;
+                pos.Line++;
             }
 
             // right
-            pos.SetValues(pos.Line, pos.Column + 1);
+            pos.SetValues(Position.Line, Position.Column + 1);
             while (Board.PositionValidation(pos) && CanMove(pos))
             {
                 mat[pos.Line, pos.Column] = true;
                 if (Board.Piece(pos) != null && Board.Piece(pos).Color != Color)
-                {
                     break;
-                }
-                pos.Column = pos.Column + 1;
+                pos.Column++;
             }
 
             // left
-            pos.SetValues(pos.Line, pos.Column - 1);
+            pos.SetValues(Position.Line, Position.Column - 1);
             while (Board.PositionValidation(pos) && CanMove(pos))
             {
                 mat[pos.Line, pos.Column] = true;
                 if (Board.Piece(pos) != null && Board.Piece(pos).Color != Color)
-                {
                     break;
-                }
-                pos.Column = pos.Column - 1;
+                pos.Column--;
             }
             return mat;
         }
