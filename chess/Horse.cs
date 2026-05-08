@@ -2,12 +2,12 @@
 
 namespace chess
 {
-    class King : Piece
+    class Horse : Piece
     {
-        public King(Board board, Color color) : base(board, color) { }
+        public Horse(Board board, Color color) : base(board, color) { }
         public override string ToString()
         {
-            return "K";
+            return "H";
         }
 
         private bool CanMove(Position pos)
@@ -22,43 +22,36 @@ namespace chess
 
             Position pos = new Position(0, 0);
 
-            // above
-            pos.SetValues(Position.Line - 1, Position.Column);
+            // 8 L-shaped moves of the knight
+            pos.SetValues(Position.Line - 2, Position.Column - 1);
             if (Board.PositionValidation(pos) && CanMove(pos))
                 mat[pos.Line, pos.Column] = true;
 
-            // northeast
-            pos.SetValues(Position.Line - 1, Position.Column + 1);
+            pos.SetValues(Position.Line - 2, Position.Column + 1);
             if (Board.PositionValidation(pos) && CanMove(pos))
                 mat[pos.Line, pos.Column] = true;
 
-            // right
-            pos.SetValues(Position.Line, Position.Column + 1);
+            pos.SetValues(Position.Line - 1, Position.Column + 2);
             if (Board.PositionValidation(pos) && CanMove(pos))
                 mat[pos.Line, pos.Column] = true;
 
-            // southeast
-            pos.SetValues(Position.Line + 1, Position.Column + 1);
+            pos.SetValues(Position.Line + 1, Position.Column + 2);
             if (Board.PositionValidation(pos) && CanMove(pos))
                 mat[pos.Line, pos.Column] = true;
 
-            // below
-            pos.SetValues(Position.Line + 1, Position.Column);
+            pos.SetValues(Position.Line + 2, Position.Column + 1);
             if (Board.PositionValidation(pos) && CanMove(pos))
                 mat[pos.Line, pos.Column] = true;
 
-            // southwest
-            pos.SetValues(Position.Line + 1, Position.Column - 1);
+            pos.SetValues(Position.Line + 2, Position.Column - 1);
             if (Board.PositionValidation(pos) && CanMove(pos))
                 mat[pos.Line, pos.Column] = true;
 
-            // left
-            pos.SetValues(Position.Line, Position.Column - 1);
+            pos.SetValues(Position.Line + 1, Position.Column - 2);
             if (Board.PositionValidation(pos) && CanMove(pos))
                 mat[pos.Line, pos.Column] = true;
 
-            // northwest
-            pos.SetValues(Position.Line - 1, Position.Column - 1);
+            pos.SetValues(Position.Line - 1, Position.Column - 2);
             if (Board.PositionValidation(pos) && CanMove(pos))
                 mat[pos.Line, pos.Column] = true;
 
