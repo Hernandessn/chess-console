@@ -11,10 +11,18 @@ namespace chess_console
             Console.WriteLine();
             PrintPiecesCaptured(game);
             Console.WriteLine($"Shift: {game.Shift}");
-            Console.WriteLine($"Aguardando jogada: {game.CurrentPlayer}");
-            if (game.Xeque)
+            if (!game.Finished)
             {
-                Console.WriteLine("XEQUE!");
+                Console.WriteLine($"Waiting for the play: {game.CurrentPlayer}");
+                if (game.Xeque)
+                {
+                    Console.WriteLine("XEQUE!");
+                }
+            }
+            else
+            {
+                Console.WriteLine("CHECKMATE");
+                Console.WriteLine($"Winner: {game.CurrentPlayer}");
             }
         }
 
@@ -37,7 +45,7 @@ namespace chess_console
             Console.Write("[");
             foreach (Piece x in group)
             {
-                Console.Write(x +  " ");
+                Console.Write(x + " ");
             }
             Console.Write("]");
         }
@@ -74,7 +82,7 @@ namespace chess_console
                 }
                 Console.BackgroundColor = OriginalBackground;
                 Console.WriteLine();
-            } 
+            }
             Console.BackgroundColor = OriginalBackground;
             Console.WriteLine("  a b c d e f g h");
         }

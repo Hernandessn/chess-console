@@ -41,8 +41,10 @@ namespace chess_console
                         Console.WriteLine($"Error: {e.Message}");
                         Console.ReadLine();
                     }
-                    }
                 }
+                Console.Clear();
+                Screen.PrintMatch(game);
+            }
             catch (BoardException e)
             {
                 Console.WriteLine($"Error: {e.Message}");

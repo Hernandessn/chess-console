@@ -67,8 +67,15 @@ namespace chess
             {
                 Xeque = false;
             }
-            Shift++;
-            ChangePlayer();
+            if (CheckmateTest(Opponent(CurrentPlayer)))
+            {
+                Finished = true;
+            }
+            else
+            {
+                Shift++;
+                ChangePlayer();
+            }
         }
 
         public void validationPositionOrigin(Position pos)
@@ -147,7 +154,7 @@ namespace chess
 
         private Piece King(Color color)
         {
-            foreach(Piece x in PiecesInPlay(color))
+            foreach (Piece x in PiecesInPlay(color))
             {
                 if (x is King)
                 {
@@ -164,7 +171,7 @@ namespace chess
             {
                 throw new BoardException($"There is no king of that {color} on the board");
             }
-            foreach(Piece x in PiecesInPlay(Opponent(color)))
+            foreach (Piece x in PiecesInPlay(Opponent(color)))
             {
                 bool[,] mat = x.PossibleMoviments();
                 if (mat[K.Position.Line, K.Position.Column])
@@ -174,6 +181,38 @@ namespace chess
             }
             return false;
         }
+
+        public bool CheckmateTest(Color color)
+        {
+            if (!IsInCheck(color))
+            {
+                return false;
+            }
+            foreach (Piece x in PiecesInPlay(color))
+            {
+                bool[,] mat = x.PossibleMoviments();
+                for (int i = 0; i < Board.Lines; i++)
+                {
+                    for (int j = 0; j < Board.Lines; j++)
+                    {
+                        if (mat[i, j])
+                        {
+                            Position origin = x.Position;
+                            Position destination = new Position(i, j);
+                            Piece pieceCaptured = PerformsMoviment(origin, destination);
+                            bool testCheck = IsInCheck(color);
+                            UndoMove(origin, destination, pieceCaptured);
+                            if (!testCheck)
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
         public void PutNewPiece(char column, int line, Piece piece)
         {
             Board.ToPutPiece(piece, new PositonChess(column, line).ToPosition());
@@ -182,18 +221,11 @@ namespace chess
         private void Putpieces()
         {
             PutNewPiece('c', 1, new Tower(Board, Color.White));
-            PutNewPiece('c', 2, new Tower(Board, Color.White));
-            PutNewPiece('d', 2, new Tower(Board, Color.White));
             PutNewPiece('d', 1, new King(Board, Color.White));
-            PutNewPiece('e', 1, new Tower(Board, Color.White));
-            PutNewPiece('e', 2, new Tower(Board, Color.White));
+            PutNewPiece('h', 7, new Tower(Board, Color.White));
 
-            PutNewPiece('c', 7, new Tower(Board, Color.Black));
-            PutNewPiece('c', 8, new Tower(Board, Color.Black));
-            PutNewPiece('d', 7, new Tower(Board, Color.Black));
-            PutNewPiece('d', 8, new King(Board, Color.Black));
-            PutNewPiece('e', 7, new Tower(Board, Color.Black));
-            PutNewPiece('e', 8, new Tower(Board, Color.Black));
+            PutNewPiece('a', 8, new King(Board, Color.Black));
+            PutNewPiece('b', 8, new Tower(Board, Color.Black));
 
         }
     }
