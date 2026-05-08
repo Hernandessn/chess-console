@@ -12,6 +12,10 @@ namespace chess_console
             PrintPiecesCaptured(game);
             Console.WriteLine($"Shift: {game.Shift}");
             Console.WriteLine($"Aguardando jogada: {game.CurrentPlayer}");
+            if (game.Xeque)
+            {
+                Console.WriteLine("XEQUE!");
+            }
         }
 
         public static void PrintPiecesCaptured(ChessGame game)
