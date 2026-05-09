@@ -4,7 +4,9 @@ namespace chess
 {
     class Pawn : Piece
     {
-        public Pawn(Board board, Color color) : base(board, color) { }
+        private ChessGame _game;
+        public Pawn(Board board, Color color, ChessGame game) : base(board, color) { _game = game; }
+
         public override string ToString()
         {
             return "P";
@@ -19,7 +21,6 @@ namespace chess
         public override bool[,] PossibleMoviments()
         {
             bool[,] mat = new bool[Board.Lines, Board.Columns];
-
             Position pos = new Position(0, 0);
 
             if (Color == Color.White)
@@ -44,8 +45,20 @@ namespace chess
                 pos.SetValues(Position.Line - 1, Position.Column + 1);
                 if (Board.PositionValidation(pos) && CanCapture(pos))
                     mat[pos.Line, pos.Column] = true;
+
+                // #special move en passant white
+                if (Position.Line == 3)
+                {
+                    Position left = new Position(Position.Line, Position.Column - 1);
+                    if (Board.PositionValidation(left) && CanCapture(left) && Board.Piece(left) == _game.VulnerableEnPassant)
+                        mat[left.Line - 1, left.Column] = true;
+
+                    Position right = new Position(Position.Line, Position.Column + 1);
+                    if (Board.PositionValidation(right) && CanCapture(right) && Board.Piece(right) == _game.VulnerableEnPassant)
+                        mat[right.Line - 1, right.Column] = true;
+                }
             }
-            else // Black
+            else 
             {
                 // 1 square forward
                 pos.SetValues(Position.Line + 1, Position.Column);
@@ -67,6 +80,18 @@ namespace chess
                 pos.SetValues(Position.Line + 1, Position.Column + 1);
                 if (Board.PositionValidation(pos) && CanCapture(pos))
                     mat[pos.Line, pos.Column] = true;
+
+                // #special move en passant black
+                if (Position.Line == 4)
+                {
+                    Position left = new Position(Position.Line, Position.Column - 1);
+                    if (Board.PositionValidation(left) && CanCapture(left) && Board.Piece(left) == _game.VulnerableEnPassant)
+                        mat[left.Line + 1, left.Column] = true;
+
+                    Position right = new Position(Position.Line, Position.Column + 1);
+                    if (Board.PositionValidation(right) && CanCapture(right) && Board.Piece(right) == _game.VulnerableEnPassant)
+                        mat[right.Line + 1, right.Column] = true;
+                }
             }
 
             return mat;
