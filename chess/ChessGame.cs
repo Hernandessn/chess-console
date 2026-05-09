@@ -140,6 +140,23 @@ namespace chess
                 throw new BoardException("You can't put yourself in check");
             }
 
+            Piece p = Board.Piece(destination);
+
+            // #special move promotion
+            if (p is Pawn)
+            {
+                if ((p.Color == Color.White && destination.Line == 0) || (p.Color == Color.Black && destination.Line == 7))
+                {
+                    p = Board.RemovePiece(destination);
+                    _pieces.Remove(p);
+                    Piece queen = new Queen(Board, p.Color);
+                    Board.ToPutPiece(queen, destination);
+                    _pieces.Add(queen);
+                }
+            }
+
+
+
             if (IsInCheck(Opponent(CurrentPlayer)))
             {
                 Xeque = true;
@@ -158,7 +175,6 @@ namespace chess
                 ChangePlayer();
             }
 
-            Piece p = Board.Piece(destination);
 
             // #special move en passant
             if (p is Pawn && (destination.Line == origin.Line - 2 || destination.Line == origin.Line + 2))
