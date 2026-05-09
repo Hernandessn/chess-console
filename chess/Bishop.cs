@@ -22,26 +22,45 @@ namespace chess
 
             Position pos = new Position(0, 0);
 
-           
             // northeast
             pos.SetValues(Position.Line - 1, Position.Column + 1);
-            if (Board.PositionValidation(pos) && CanMove(pos))
+            while (Board.PositionValidation(pos) && CanMove(pos))
+            {
                 mat[pos.Line, pos.Column] = true;
+                if (Board.Piece(pos) != null && Board.Piece(pos).Color != Color) break;
+                pos.Line--;
+                pos.Column++;
+            }
 
             // southeast
             pos.SetValues(Position.Line + 1, Position.Column + 1);
-            if (Board.PositionValidation(pos) && CanMove(pos))
+            while (Board.PositionValidation(pos) && CanMove(pos))
+            {
                 mat[pos.Line, pos.Column] = true;
+                if (Board.Piece(pos) != null && Board.Piece(pos).Color != Color) break;
+                pos.Line++;
+                pos.Column++;
+            }
 
             // southwest
             pos.SetValues(Position.Line + 1, Position.Column - 1);
-            if (Board.PositionValidation(pos) && CanMove(pos))
+            while (Board.PositionValidation(pos) && CanMove(pos))
+            {
                 mat[pos.Line, pos.Column] = true;
+                if (Board.Piece(pos) != null && Board.Piece(pos).Color != Color) break;
+                pos.Line++;
+                pos.Column--;
+            }
 
             // northwest
             pos.SetValues(Position.Line - 1, Position.Column - 1);
-            if (Board.PositionValidation(pos) && CanMove(pos))
+            while (Board.PositionValidation(pos) && CanMove(pos))
+            {
                 mat[pos.Line, pos.Column] = true;
+                if (Board.Piece(pos) != null && Board.Piece(pos).Color != Color) break;
+                pos.Line--;
+                pos.Column--;
+            }
 
             return mat;
         }

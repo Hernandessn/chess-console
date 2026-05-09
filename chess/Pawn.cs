@@ -21,6 +21,7 @@ namespace chess
             bool[,] mat = new bool[Board.Lines, Board.Columns];
 
             Position pos = new Position(0, 0);
+
             if (Color == Color.White)
             {
                 // 1 square forward
@@ -30,7 +31,8 @@ namespace chess
 
                 // 2 squares on first move
                 pos.SetValues(Position.Line - 2, Position.Column);
-                if (Board.PositionValidation(pos) && Board.Piece(pos) == null && NumberOfMovements == 0)
+                Position middleW = new Position(Position.Line - 1, Position.Column);
+                if (Board.PositionValidation(pos) && Board.Piece(pos) == null && Board.Piece(middleW) == null && NumberOfMovements == 0)
                     mat[pos.Line, pos.Column] = true;
 
                 // capture left diagonal
@@ -52,7 +54,8 @@ namespace chess
 
                 // 2 squares on first move
                 pos.SetValues(Position.Line + 2, Position.Column);
-                if (Board.PositionValidation(pos) && Board.Piece(pos) == null && NumberOfMovements == 0)
+                Position middleB = new Position(Position.Line + 1, Position.Column);
+                if (Board.PositionValidation(pos) && Board.Piece(pos) == null && Board.Piece(middleB) == null && NumberOfMovements == 0)
                     mat[pos.Line, pos.Column] = true;
 
                 // capture left diagonal
